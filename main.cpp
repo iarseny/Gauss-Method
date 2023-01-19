@@ -4,38 +4,9 @@
 #include <string>
 using namespace std;
  
-int main()
+string gauss(float **matrix,int n,int m)
 {
-   int i, j, n, m;
-   cout << "введи число уравнений: ";
-         cin >> n;
-         cout << "введи число неизвестных: ";
-         cin >> m;
-         m+=1;
-    float **matrix = new float *[n];
-         for (i=0; i<n; i++)
-             matrix[i] = new float [m];
- 
-//инициализируем
- 
-    for (i = 0; i<n; i++)
- 
-        for (j = 0; j<m; j++)
-        {
-            cout << "Элемент " << "[" << i+1 << " , " << j+1 << "]: "  ;
- 
-            cin >> matrix[i][j];
-}
- 
- //выводим массив
-    cout << "matrix: " << endl;
-      for (i=0; i<n; i++)
-       {
-          for (j=0; j<m; j++)
-            cout << matrix[i][j] << " ";
-        cout << endl;
-       }
-    cout << endl;
+   int i, j;
  
 //Метод Гаусса
 //Прямой ход, приведение к верхнетреугольному виду
@@ -69,16 +40,55 @@ int main()
             }
         }
 
+        string ret = "";
         if (correct) {
             for (i=0; i<n; i++) {
-                cout << "X" << i + 1  << " = " << xx[i] << endl;
+                ret += ("X" + to_string(i + 1)  + " = " + to_string(xx[i]));
+                ret += "\n";
             }
             cout << endl;
         } else {
-            cout << endl << "Нет решений!";
+            ret += "Нет решений!";
         }
  
-    delete[] matrix;
- 
-   return 0;
+   return ret;
 }
+
+
+int main() {
+
+    int n = 3;
+    int m = 4;
+
+    float **matrix = new float*[n];
+
+    for (int i = 0; i < n; i++) {
+        matrix[i] = new float[m];
+    }
+
+    matrix[0][0] = 6;
+    matrix[0][1] = 8;
+    matrix[0][2] = 12;
+    matrix[0][3] = 3;
+
+    matrix[1][0] = 4;
+    matrix[1][1] = 5;
+    matrix[1][2] = 7;
+    matrix[1][3] = 15;
+
+    matrix[2][0] = 16;
+    matrix[2][1] = 3;
+    matrix[2][2] = 6;
+    matrix[2][3] = 62;
+
+
+    cout << gauss(matrix,n,m);
+
+    for (int i = 0; i < n; i++) {
+        delete [] matrix[i];
+    }
+
+    delete [] matrix;
+
+    return 0;
+};
